@@ -1,0 +1,1 @@
+This is a sample iOS app for a [blog post on gesture recognition and attention to detail](oleb.net/blog/2012/01/gesture-recognition-on-ios-with-attention-to-detail/). Please see the post for more info.
