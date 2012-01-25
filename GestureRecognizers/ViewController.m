@@ -23,20 +23,23 @@
 {
     [super viewDidLoad];
     
-    self.imageView.userInteractionEnabled = YES;
-    
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panDetected:)];
-    [self.imageView addGestureRecognizer:panRecognizer];
+    [self.view addGestureRecognizer:panRecognizer];
     
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
-    [self.imageView addGestureRecognizer:pinchRecognizer];
+    [self.view addGestureRecognizer:pinchRecognizer];
     
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotationDetected:)];
-    [self.imageView addGestureRecognizer:rotationRecognizer];
+    [self.view addGestureRecognizer:rotationRecognizer];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected:)];
     tapRecognizer.numberOfTapsRequired = 2;
-    [self.imageView addGestureRecognizer:tapRecognizer];
+    [self.view addGestureRecognizer:tapRecognizer];
+
+    panRecognizer.delegate = self;
+    pinchRecognizer.delegate = self;
+    rotationRecognizer.delegate = self;
+    // We don't need a delegate for the tapRecognizer
 }
 
 - (void)viewDidUnload
@@ -110,6 +113,14 @@
         self.imageView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
         self.imageView.transform = CGAffineTransformIdentity;
     }];
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 @end
